@@ -146,7 +146,6 @@ dependencies:
       - editdistance==0.8.1
       - einops==0.7.0
       - fastjsonschema==2.20.0
-      - flash-attn==2.7.4.post1
       - fonttools==4.49.0
       - frozenlist==1.4.1
       - fsspec==2023.10.0
