@@ -12,6 +12,7 @@ DocVXQA: Context-Aware Visual Explanations for Document Question Answering
     - [Demo](#demo)
     - [Training](#training)
     - [Evaluation](#evaluation)
+  - [License](#license)
   - [Citation](#citation)
 
 ## Description 
@@ -51,6 +52,11 @@ You can try out the model quickly using our provided Jupyter notebook [demo.ipyn
 Coming soon ...
 ### Evaluation
 Coming Soon ...
+
+## License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)** License 🛡.
+
 
 ## Citation
 
