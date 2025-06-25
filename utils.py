@@ -140,11 +140,14 @@ def find_bg_2(np_img):
 
     return bg_mask
 
-def build_model(model_name, task='vqa', args=None):
+def build_model(model_name, task='vqa', args=None, use_p2s_ckpt=False):
     if model_name == 'pix2struct':
         from models.pix2struct import get_pix2struct_model
         from models.model import XDocVQA
-        pix2struct, processor = get_pix2struct_model(task=task, ckpts=args.base_pix2struct_path)
+        if use_p2s_ckpt:
+            pix2struct, processor = get_pix2struct_model(task=task, ckpts=args.base_pix2struct_path)
+        else:
+            pix2struct, processor = get_pix2struct_model(task=task)
         model = XDocVQA(pix2struct_model=pix2struct, max_patches=args.max_patches)
     elif model_name == 'donut':
         from models.donut import get_donut_model
