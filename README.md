@@ -62,7 +62,10 @@ python train.py
 ```
 
 ### Evaluation
-Coming Soon ...
+After setting your desired [args](./arg_utils.py) you can simply train with
+```bash
+python evaluate.py
+```
 
 ## License
 
