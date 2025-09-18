@@ -11,6 +11,8 @@ DocVXQA: Context-Aware Visual Explanations for Document Question Answering
     - [Download Weights](#download-weights)
     - [Demo](#demo)
     - [Training](#training)
+      - [Data preparation](#data-preparation)
+      - [model training](#model-training)
     - [Evaluation](#evaluation)
   - [License](#license)
   - [Citation](#citation)
@@ -49,7 +51,16 @@ After downloading, place the weights in your preferred directory.
 You can try out the model quickly using our provided Jupyter notebook [demo.ipynb](./demo.ipynb).
 
 ### Training
-Coming soon ...
+#### Data preparation
+
+First, a similarity map should be extracted using [ColPali](https://github.com/illuin-tech/colpali). For each data point, two maps are generated: one between the question and the document image, and another between the answer and the document image. These maps are stored and later used in the dataloader for training with the token interactions loss. For an example implementation of similarity map extraction, see this [reference](./colpali_mask_generator.py), though you are free to implement your own approach.
+
+#### model training
+After setting your desired [args](./arg_utils.py) you can simply train with
+```bash
+python train.py
+```
+
 ### Evaluation
 Coming Soon ...
 
