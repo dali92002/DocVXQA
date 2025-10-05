@@ -28,7 +28,7 @@ base_pix2struct.to(device)
 model.to(device)
 
 # get the dataloaders
-_, _, test_dataloader = get_loaders(processor, args.data_path, args.batch_size)
+_, val_dataloader, _ = get_loaders(processor, args.data_path, args.batch_size)
 
 def find_bg(features, mask_out):
     features = torch.round(features[:,:, 2:] * 10000) / 10000
@@ -45,7 +45,7 @@ def eval_masked_doc(model, base_pix2struct=None, post_process=False, k_postproce
     acc = 0
     batch_idx = 0
     results = {"acc": [], "anls": [], "pred_answers": [], "mask_ratio": []}
-    for batch in tqdm(test_dataloader):
+    for batch in tqdm(val_dataloader):
         gt_answers = batch.pop("gt_answers")
         flattened_patches = batch.pop("flattened_patches").to(device)
         attention_mask = batch.pop("attention_mask").to(device)
@@ -92,7 +92,6 @@ def eval_masked_doc(model, base_pix2struct=None, post_process=False, k_postproce
                 sequence_classes = torch.argmax(sequence_logits, 2)
                 lenghts = [len(sq[sq!= 0])-1 for sq in sequence_classes]
                 all_heads_attn_11 = torch.stack([torch.sum(torch.sum(cross_attention_11[k,:,:i,:args.max_patches], 1), 0).unsqueeze(-1) for k, i in enumerate(lenghts)])
-                # all_heads_attn_11 = torch.sum(torch.sum(cross_attention_11[:,:,:7,:1024], 1), 1).unsqueeze(-1) #torch.sum(cross_attention_11[:,:,0,:], 1) # use only the first token
                 all_heads_attn_11 = all_heads_attn_11.repeat(1, 1, 768)
                 feat_attn = torch.cat((pos_encoding, features, all_heads_attn_11), 2)
                 mask_out_raw = model.mask_head_deocder(feat_attn)
@@ -172,7 +171,7 @@ if __name__ == "__main__":
 
     all_results["masked_docvqa_original_p2s_m"] = results
 
-    # save results as json per thresg
+    # save results as json per threshold
     saving_dir = os.path.join("results", f"{args.model}_{args.dataset}_", "eval_results")
     os.makedirs(saving_dir, exist_ok=True)
     with open(os.path.join(saving_dir,"results_k_"+str(k)+"_th_"+str(threshhold)+".json"), "w") as f:

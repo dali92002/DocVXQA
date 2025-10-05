@@ -62,7 +62,7 @@ python train.py
 ```
 
 ### Evaluation
-After setting your desired [args](./arg_utils.py) you can simply train with
+After setting your desired [args](./arg_utils.py) you can evaluate with
 ```bash
 python evaluate.py
 ```
